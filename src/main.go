@@ -1,10 +1,9 @@
 package main
 
 import (
+	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
-
-	"github.com/gorilla/websocket"
 )
 
 var clients = make(map[*websocket.Conn]bool) // connected clients

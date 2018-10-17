@@ -1,4 +1,9 @@
-# Go Chat
+# Aditum Chatroom
+> Chat room server for the community
+
+-------------------------------------------------------------------------------
+
+## Go Chat
 
 This is a simple chat web app written in Go
 
