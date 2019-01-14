@@ -1,0 +1,10 @@
+server:
+  port: 5678
+
+spring:
+  application:
+    name: sidecar
+
+sidecar:
+  port: 8080
+     health-uri: http://localhost:${sidecar.port}/health

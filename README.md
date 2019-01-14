@@ -1,4 +1,5 @@
-# Aditum Chatroom
+# Aditum Golang
+
 > Chat room server for the community
 
 -------------------------------------------------------------------------------
