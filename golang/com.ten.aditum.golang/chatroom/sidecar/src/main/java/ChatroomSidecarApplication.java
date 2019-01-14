@@ -9,8 +9,8 @@ import org.springframework.cloud.netflix.sidecar.EnableSidecar;
 @SpringBootApplication
 @EnableSidecar
 @EnableApolloConfig
-public class GoSidecarApplication {
+public class ChatroomSidecarApplication {
     public static void main(String[] args) {
-        SpringApplication.run(GoSidecarApplication.class, args);
+        SpringApplication.run(ChatroomSidecarApplication.class, args);
     }
 }
