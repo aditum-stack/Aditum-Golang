@@ -1,0 +1,1 @@
+D:\Project\GoWork\src\email/views/emailInfo/show.tpl
