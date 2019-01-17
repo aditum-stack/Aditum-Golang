@@ -1,4 +1,4 @@
-package main
+package beego
 
 import (
 	_ "email/routers"
