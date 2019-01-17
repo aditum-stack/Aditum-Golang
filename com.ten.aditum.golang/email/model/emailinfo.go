@@ -2,23 +2,21 @@ package model
 
 import (
 	"database/sql"
-	"errors"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 )
 
 type EmailInfo struct {
-	DataTable
-	Id               int64
-	EmailId          string
-	EmailTitle       string
-	EmailContent     string
-	SenderName       string
-	SenderAddress    string
-	RecipientName    string
-	RecipientAddress string
-	EmailCreateTime  string
-	EmailIsDeleted   int
+	Id               int64  `json:"id"`
+	EmailId          string `json:"emailId"`
+	EmailTitle       string `json:"emailTitle"`
+	EmailContent     string `json:"emailContent"`
+	SenderName       string `json:"senderName"`
+	SenderAddress    string `json:"senderAddress"`
+	RecipientName    string `json:"recipientName"`
+	RecipientAddress string `json:"recipientAddress"`
+	EmailCreateTime  string `json:"emailCreateTime"`
+	EmailIsDeleted   int    `json:"emailIsDeleted"`
 }
 
 // 通过邮件DUID(email_id)获取邮件数据
@@ -78,18 +76,36 @@ func InsertEmail(m *EmailInfo) (id int64, err error) {
 	res, err := Transaction(
 		func(tx *sql.Tx, res sql.Result) (sql.Result, error) {
 			// 准备sql语句
-			stmt, err := tx.Prepare("sql")
+			stmt, err := tx.Prepare(
+				"INSERT INTO email_info(" +
+					"email_id," +
+					"email_title," +
+					"email_content," +
+					"sender_name," +
+					"sender_address," +
+					"recipient_name," +
+					"recipient_address," +
+					"email_is_deleted) " +
+					"VALUES(?,?,?,?,?,?,?,?)")
 			if err != nil {
 				msg := "Prepare fail"
-				fmt.Println(msg)
-				return nil, errors.New(msg)
+				fmt.Println(msg, err)
+				return nil, err
 			}
 			// 将参数传递到sql语句中并且执行
-			res, err = stmt.Exec()
+			res, err = stmt.Exec(
+				m.EmailId,
+				m.EmailTitle,
+				m.EmailContent,
+				m.SenderName,
+				m.SenderAddress,
+				m.RecipientName,
+				m.RecipientAddress,
+				m.EmailIsDeleted)
 			if err != nil {
 				msg := "Exec fail"
-				fmt.Println(msg)
-				return nil, errors.New(msg)
+				fmt.Println(msg, err)
+				return nil, err
 			}
 			return res, nil
 		})
@@ -107,15 +123,15 @@ func UpdateEmailInfoById(m *EmailInfo) (err error) {
 			stmt, err := tx.Prepare("UPDATE email_info SET email_title = ?, email_content = ? WHERE email_id = ?")
 			if err != nil {
 				msg := "Prepare fail"
-				fmt.Println(msg)
-				return nil, errors.New(msg)
+				fmt.Println(msg, err)
+				return nil, err
 			}
 			// 将参数传递到sql语句中并且执行
 			res, err = stmt.Exec(m.EmailTitle, m.EmailContent, m.EmailId)
 			if err != nil {
 				msg := "Exec fail"
-				fmt.Println(msg)
-				return nil, errors.New(msg)
+				fmt.Println(msg, err)
+				return nil, err
 			}
 			return res, nil
 		})
@@ -133,15 +149,15 @@ func DeleteEmailInfo(id string) (err error) {
 			stmt, err := tx.Prepare("UPDATE email_info SET email_is_deleted = 1 WHERE email_id = ?")
 			if err != nil {
 				msg := "Prepare fail"
-				fmt.Println(msg)
-				return nil, errors.New(msg)
+				fmt.Println(msg, err)
+				return nil, err
 			}
 			// 将参数传递到sql语句中并且执行
 			res, err = stmt.Exec(id)
 			if err != nil {
 				msg := "Exec fail"
-				fmt.Println(msg)
-				return nil, errors.New(msg)
+				fmt.Println(msg, err)
+				return nil, err
 			}
 			return res, nil
 		})
