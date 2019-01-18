@@ -1,16 +1,17 @@
+package com.ten.aditun.golang.email.sidecar;
+
 import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.sidecar.EnableSidecar;
 
-/**
- * 监听30023端口
- */
 @SpringBootApplication
-@EnableSidecar
+@EnableDiscoveryClient
 @EnableApolloConfig
-public class SearcherSidecarApplication {
+@EnableSidecar
+public class EmailSidecarApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SearcherSidecarApplication.class, args);
+        SpringApplication.run(EmailSidecarApplication.class, args);
     }
 }

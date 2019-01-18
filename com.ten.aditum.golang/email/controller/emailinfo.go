@@ -32,13 +32,14 @@ func SendEmail(w http.ResponseWriter, r *http.Request) {
 	body, _ := ioutil.ReadAll(r.Body)
 	json.Unmarshal(body, &req)
 	fmt.Print("post args:", req)
+	// TODO 获取DUID
 	emailInfo := &model.EmailInfo{
-		EmailId:          req["emailId"].(string),
+		EmailId:          "",
 		EmailTitle:       req["emailTitle"].(string),
 		EmailContent:     req["emailContent"].(string),
-		SenderName:       req["senderName"].(string),
-		SenderAddress:    req["senderAddress"].(string),
-		RecipientName:    req["recipientName"].(string),
+		SenderName:       "",
+		SenderAddress:    "",
+		RecipientName:    "",
 		RecipientAddress: req["recipientAddress"].(string)}
 	str, _ := json.Marshal(emailInfo)
 	fmt.Print("SendEmail:", string(str))

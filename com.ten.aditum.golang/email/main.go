@@ -24,9 +24,16 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello Aditum Email!")
 }
 
+type health struct {
+	Status string `json:"status"`
+}
+
 // eureka心跳监测
 func healthCheck(w http.ResponseWriter, r *http.Request) {
-	health := map[string]string{"status": "UP"}
+	health := health{
+		Status: "UP"}
+	w.Header().Set("content-type", "application/json; charset=utf-8")
+	fmt.Println("health check ", health)
 	json.NewEncoder(w).Encode(health)
 }
 
@@ -37,7 +44,7 @@ func main() {
 	router.HandleFunc("/email/{emailId}", controller.GetEmailInfoById).Methods("GET")
 	router.HandleFunc("/email", controller.GetAllEmailInfo).Methods("GET")
 	router.HandleFunc("/email", controller.SendEmail).Methods("POST")
-	router.HandleFunc("/email", controller.UpdateEmailInfoById).Methods("PUT")
-	router.HandleFunc("/email/{emailId}", controller.DeleteEmailInfo).Methods("DELETE")
+	//router.HandleFunc("/email", controller.UpdateEmailInfoById).Methods("PUT")
+	//router.HandleFunc("/email/{emailId}", controller.DeleteEmailInfo).Methods("DELETE")
 	log.Fatal(http.ListenAndServe(":12001", router))
 }
