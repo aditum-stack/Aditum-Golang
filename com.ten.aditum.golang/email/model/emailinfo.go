@@ -34,7 +34,7 @@ func GetEmailInfoById(emailId string) EmailInfo {
 		&email.EmailCreateTime,
 		&email.EmailIsDeleted)
 	if err != nil {
-		fmt.Println("查询出错了，emailId=" + emailId)
+		fmt.Println("查询出错了:", err)
 	}
 	return email
 }
@@ -44,7 +44,7 @@ func GetAllEmailInfo() []EmailInfo {
 	// 执行查询语句
 	rows, err := DB.Query("SELECT * from email_info")
 	if err != nil {
-		fmt.Println("查询出错了")
+		fmt.Println("查询出错了:", err)
 	}
 	var emails []EmailInfo
 	// 循环读取结果
@@ -63,7 +63,7 @@ func GetAllEmailInfo() []EmailInfo {
 			&email.EmailCreateTime,
 			&email.EmailIsDeleted)
 		if err != nil {
-			fmt.Println("rows fail")
+			fmt.Println("rows fail:", err)
 		}
 		//将user追加到users的这个数组中
 		emails = append(emails, email)
@@ -88,7 +88,7 @@ func InsertEmail(m *EmailInfo) (id int64, err error) {
 					"email_is_deleted) " +
 					"VALUES(?,?,?,?,?,?,?,?)")
 			if err != nil {
-				msg := "Prepare fail"
+				msg := "Prepare fail:"
 				fmt.Println(msg, err)
 				return nil, err
 			}
@@ -103,7 +103,7 @@ func InsertEmail(m *EmailInfo) (id int64, err error) {
 				m.RecipientAddress,
 				m.EmailIsDeleted)
 			if err != nil {
-				msg := "Exec fail"
+				msg := "Exec fail:"
 				fmt.Println(msg, err)
 				return nil, err
 			}
@@ -122,14 +122,14 @@ func UpdateEmailInfoById(m *EmailInfo) (err error) {
 			// 准备sql语句
 			stmt, err := tx.Prepare("UPDATE email_info SET email_title = ?, email_content = ? WHERE email_id = ?")
 			if err != nil {
-				msg := "Prepare fail"
+				msg := "Prepare fail:"
 				fmt.Println(msg, err)
 				return nil, err
 			}
 			// 将参数传递到sql语句中并且执行
 			res, err = stmt.Exec(m.EmailTitle, m.EmailContent, m.EmailId)
 			if err != nil {
-				msg := "Exec fail"
+				msg := "Exec fail:"
 				fmt.Println(msg, err)
 				return nil, err
 			}
@@ -148,14 +148,14 @@ func DeleteEmailInfo(id string) (err error) {
 			// 准备sql语句
 			stmt, err := tx.Prepare("UPDATE email_info SET email_is_deleted = 1 WHERE email_id = ?")
 			if err != nil {
-				msg := "Prepare fail"
+				msg := "Prepare fail:"
 				fmt.Println(msg, err)
 				return nil, err
 			}
 			// 将参数传递到sql语句中并且执行
 			res, err = stmt.Exec(id)
 			if err != nil {
-				msg := "Exec fail"
+				msg := "Exec fail:"
 				fmt.Println(msg, err)
 				return nil, err
 			}
