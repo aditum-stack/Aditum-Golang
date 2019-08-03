@@ -11,7 +11,7 @@ import (
 // 数据库配置
 const (
 	userName = "root"
-	password = "wangshihao"
+	password = "password"
 	ip       = "47.100.236.64"
 	port     = "3306"
 	dbName   = "golang-email"

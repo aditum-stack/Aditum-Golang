@@ -10,10 +10,10 @@ import (
 
 const (
 	username     = "18861857305@163.com"
-	password     = "wudiWSH123"
+	password     = "password"
 	host         = "smtp.163.com"
 	nickname     = "Aditum"
-	user         = "18861857305@163.com"
+	user         = "phone@163.com"
 	content_type = "Content-Type: text/plain; charset=UTF-8"
 )
 
